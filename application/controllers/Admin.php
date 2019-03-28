@@ -8,12 +8,11 @@ class Admin extends Base {
 
 	public function index()	{
 		if ($this->admin) {
-			echo 'OK';
-//			$this->load_header('仪表板', true);
-//			$this->load->view('admin/topbar');
-//			$this->load->view('admin/sidebar', array('com' => 'index', 'sub' => null));
-//			$this->load->view('admin/index');
-//			$this->load_footer(true);
+			$this->load_header('Dashboard', true);
+			$this->load->view('admin/sidebar', array('com' => 'index', 'sub' => null));
+			$this->load->view('admin/topbar');
+			$this->load->view('admin/index');
+			$this->load_footer(true);
 		} else
 			redirect('admin/signin');
 	}
