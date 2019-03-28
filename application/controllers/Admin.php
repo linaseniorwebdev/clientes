@@ -49,6 +49,44 @@ class Admin extends Base {
 
 	public function user($com = 'list') {
 		if ($this->admin) {
+			$data = array();
+
+			if ($this->post_exist()) {
+				if ($com == 'create') {
+					$email = $this->input->post('email');
+
+					$this->load->model('User_model');
+					$user = $this->User_model->get_by_email($email);
+
+					if ($user) {
+						$message = 'This email is already registered.';
+					} else {
+						$params = array(
+							'Email' => $email,
+							'Created_At' => date("Y-m-d H:i:s")
+						);
+						$id = $this->User_model->add_user($params);
+
+						$zone = new DateTimeZone('America/Santo_Domingo');
+						$now = new DateTime('now', $zone);
+						$token = md5($now->format('Y-m-d H:i:s')) . md5($id) . md5($email) . md5('empty');
+
+						$this->load->model('Token_model');
+						$params = array('Token' => $token, 'User' => $id);
+						$this->Token_model->add_token($params);
+
+						$action = base_url() . 'front/first/' . $token;
+
+						if ($this->invite($email, $action)) {
+							$message = 'Invitación enviada.';
+						} else {
+							$message = 'No se puede enviar la invitación. Por favor, inténtelo de nuevo más tarde.';
+						}
+					}
+				}
+				$data['message'] = $message;
+			}
+
 			if ($com == 'list')
 				$title = 'Lista de usuarios';
 			if ($com == 'create')
@@ -57,7 +95,7 @@ class Admin extends Base {
 			$this->load_header($title, true);
 			$this->load->view('admin/sidebar', array('com' => 'user', 'sub' => $com));
 			$this->load->view('admin/topbar', array('title' => $title));
-			$this->load->view('admin/index');
+			$this->load->view('admin/user_' . $com, $data);
 			$this->load_footer(true, 'user_' . $com);
 		} else
 			redirect('admin/signin');
@@ -65,6 +103,8 @@ class Admin extends Base {
 
 	public function customer($com = 'search') {
 		if ($this->admin) {
+			$this->load->model('Customer_model');
+
 			if ($com == 'search')
 				$title = 'Buscar cliente';
 			if ($com == 'create')
@@ -75,7 +115,7 @@ class Admin extends Base {
 			$this->load_header($title, true);
 			$this->load->view('admin/sidebar', array('com' => 'customer', 'sub' => $com));
 			$this->load->view('admin/topbar', array('title' => $title));
-			$this->load->view('admin/index');
+			$this->load->view('admin/customer_' . $com);
 			$this->load_footer(true, 'customer_' . $com);
 		} else
 			redirect('admin/signin');
@@ -95,7 +135,7 @@ class Admin extends Base {
 			$this->load_header($title, true);
 			$this->load->view('admin/sidebar', array('com' => 'zone', 'sub' => $com));
 			$this->load->view('admin/topbar', array('title' => $title));
-			$this->load->view('admin/index');
+			$this->load->view('admin/zone_' . $com);
 			$this->load_footer(true, 'zone_' . $com);
 		} else
 			redirect('admin/signin');
@@ -111,9 +151,31 @@ class Admin extends Base {
 			$this->load_header($title, true);
 			$this->load->view('admin/sidebar', array('com' => 'task', 'sub' => $com));
 			$this->load->view('admin/topbar', array('title' => $title));
-			$this->load->view('admin/index');
+			$this->load->view('admin/task_' . $com);
 			$this->load_footer(true, 'task_' . $com);
 		} else
 			redirect('admin/signin');
+	}
+
+	private function invite($email, $action) {
+		$this->config->load('app');
+
+		$data = array();
+		$data['appname'] = $this->config->item('name');
+		$data['company'] = $this->config->item('company');
+		$data['email'] = $this->config->item('email');
+		$data['sender'] = 'admin';
+
+		$data['action'] = $action;
+
+		$this->email->initialize();
+		$this->email->from($this->config->item('email'), $this->config->item('name'));
+		$this->email->reply_to($this->config->item('email'), $this->config->item('name'));
+		$this->email->to($email);
+		$this->email->subject('Invitation for ' . $this->config->item('name'));
+		$this->email->message($this->load->view('email/user_invitation-html', $data, TRUE));
+		$this->email->set_alt_message($this->load->view('email/user_invitation-txt', $data, TRUE));
+
+		return ($this->email->send());
 	}
 }
