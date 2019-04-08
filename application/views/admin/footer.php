@@ -35,7 +35,7 @@ if (isset($validate)) {
 <?php
 if (isset($googlemap)) {
 	?>
-	<script src="//maps.google.com/maps/api/js?key=AIzaSyDc-tuFvU94H3JKQO_Kq1M2fuF8ayPc7mU"></script>
+	<script src="//maps.google.com/maps/api/js?key="></script>
 	<?php
 }
 ?>
