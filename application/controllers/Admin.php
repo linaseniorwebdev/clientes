@@ -2,13 +2,17 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once(APPPATH . 'controllers/Base.php');
+require_once APPPATH . 'controllers/Base.php';
 
 class Admin extends Base {
 
+	/**
+	 * Login Module
+	 */
 	public function signin() {
-		if ($this->admin)
+		if ($this->admin) {
 			redirect('admin/index');
+		}
 
 		$messages = array();
 
@@ -36,30 +40,50 @@ class Admin extends Base {
 		$this->load->view('admin/signin', $messages);
 	}
 
+	/**
+	 * Logout Module
+	 */
+	public function logout() {
+		$this->session->unset_userdata('admin');
+		redirect('admin');
+	}
+
+	/**
+	 * Index Page
+	 */
 	public function index()	{
 		if ($this->admin) {
-			$this->load_header('Dashboard', true);
+			$this->load_header(array('title' => 'Dashboard'), true);
 			$this->load->view('admin/sidebar', array('com' => 'index', 'sub' => null));
 			$this->load->view('admin/topbar', array('title' => 'Dashboard'));
 			$this->load->view('admin/index');
-			$this->load_footer(true, 'index');
-		} else
+			$this->load_footer(array('name' => 'index'), true);
+		} else {
 			redirect('admin/signin');
+		}
 	}
 
+	/**
+	 * User Management Page
+	 * @param string $com
+	 * @throws Exception
+	 */
 	public function user($com = 'list') {
 		if ($this->admin) {
+			$title = '';
 			$data = array();
+			$hparams = array();
+			$fparams = array();
 
 			if ($this->post_exist()) {
-				if ($com == 'create') {
+				if ($com === 'create') {
 					$email = $this->input->post('email');
 
 					$this->load->model('User_model');
 					$user = $this->User_model->get_by_email($email);
 
 					if ($user) {
-						$message = 'This email is already registered.';
+						$message = 'Este correo electrónico ya está registrado.';
 					} else {
 						$params = array(
 							'Email' => $email,
@@ -87,76 +111,141 @@ class Admin extends Base {
 				$data['message'] = $message;
 			}
 
-			if ($com == 'list')
-				$title = 'Lista de usuarios';
-			if ($com == 'create')
-				$title = 'Crear nuevo usuario';
+			if ($com === 'list') {
+				$hparams['title'] = 'Lista de usuarios';
+				$hparams['datatable'] = 'on';
+				$fparams['datatable'] = 'on';
+			}
 
-			$this->load_header($title, true);
+			if ($com === 'create') {
+				$hparams['title'] = 'Crear nuevo usuario';
+			}
+			
+			$fparams['name'] = 'user_' . $com;
+
+			$this->load_header($hparams, true);
 			$this->load->view('admin/sidebar', array('com' => 'user', 'sub' => $com));
 			$this->load->view('admin/topbar', array('title' => $title));
 			$this->load->view('admin/user_' . $com, $data);
-			$this->load_footer(true, 'user_' . $com);
-		} else
+			$this->load_footer($fparams, true);
+		} else {
 			redirect('admin/signin');
+		}
 	}
 
+	/**
+	 * Customer Management Page
+	 * @param string $com
+	 */
 	public function customer($com = 'search') {
 		if ($this->admin) {
+			$title = '';
+			$hparams = array();
+			$fparams = array();
+
 			$this->load->model('Customer_model');
 
-			if ($com == 'search')
+			if ($com === 'search') {
 				$title = 'Buscar cliente';
-			if ($com == 'create')
-				$title = 'Crear cliente';
-			if ($com == 'map')
-				$title = 'Clientes en el mapa';
+			}
 
-			$this->load_header($title, true);
+			if ($com === 'create') {
+				$title = 'Crear cliente';
+			}
+
+			if ($com === 'map') {
+				$title = 'Clientes en el mapa';
+			}
+
+			$hparams['title'] = $title;
+			$fparams['name'] = 'customer_' . $com;
+
+			$this->load_header($hparams, true);
 			$this->load->view('admin/sidebar', array('com' => 'customer', 'sub' => $com));
 			$this->load->view('admin/topbar', array('title' => $title));
 			$this->load->view('admin/customer_' . $com);
-			$this->load_footer(true, 'customer_' . $com);
-		} else
+			$this->load_footer($fparams, true);
+		} else {
 			redirect('admin/signin');
+		}
 	}
 
+	/**
+	 * Zone Management Page
+	 * @param string $com
+	 */
 	public function zone($com = 'list') {
 		if ($this->admin) {
-			if ($com == 'list')
-				$title = 'Lista de zonas';
-			if ($com == 'create')
-				$title = 'Crear zonas';
-			if ($com == 'assign')
-				$title = 'Asignar zonas';
-			if ($com == 'optimize')
-				$title = 'Optimización de rutas';
+			$title = '';
+			$hparams = array();
+			$fparams = array();
 
-			$this->load_header($title, true);
+			if ($com === 'list') {
+				$title = 'Lista de zonas';
+			}
+
+			if ($com === 'create') {
+				$title = 'Crear zonas';
+			}
+
+			if ($com === 'assign') {
+				$title = 'Asignar zonas';
+			}
+
+			if ($com === 'optimize') {
+				$title = 'Optimización de rutas';
+			}
+
+			$hparams['title'] = $title;
+			$fparams['name'] = 'zone_' . $com;
+
+			$this->load_header($hparams, true);
 			$this->load->view('admin/sidebar', array('com' => 'zone', 'sub' => $com));
 			$this->load->view('admin/topbar', array('title' => $title));
 			$this->load->view('admin/zone_' . $com);
-			$this->load_footer(true, 'zone_' . $com);
-		} else
+			$this->load_footer($fparams, true);
+		} else {
 			redirect('admin/signin');
+		}
 	}
 
+	/**
+	 * Task Management Page
+	 * @param string $com
+	 */
 	public function task($com = 'list') {
 		if ($this->admin) {
-			if ($com == 'list')
-				$title = 'Lista de tareas';
-			if ($com == 'create')
-				$title = 'Crear tareas';
+			$title = '';
+			$hparams = array();
+			$fparams = array();
 
-			$this->load_header($title, true);
+			if ($com === 'list') {
+				$title = 'Lista de tareas';
+			}
+
+			if ($com === 'create') {
+				$title = 'Crear tareas';
+			}
+
+			$hparams['title'] = $title;
+			$fparams['name'] = 'task_' . $com;
+
+			$this->load_header($hparams, true);
 			$this->load->view('admin/sidebar', array('com' => 'task', 'sub' => $com));
 			$this->load->view('admin/topbar', array('title' => $title));
 			$this->load->view('admin/task_' . $com);
-			$this->load_footer(true, 'task_' . $com);
-		} else
+			$this->load_footer($fparams, true);
+		} else {
 			redirect('admin/signin');
+		}
 	}
 
+	/**
+	 * Send Emails
+	 * @param $email
+	 * @param $action
+	 * @return mixed
+	 */
 	private function invite($email, $action) {
 		$this->config->load('app');
 
@@ -176,6 +265,6 @@ class Admin extends Base {
 		$this->email->message($this->load->view('email/user_invitation-html', $data, TRUE));
 		$this->email->set_alt_message($this->load->view('email/user_invitation-txt', $data, TRUE));
 
-		return ($this->email->send());
+		return $this->email->send();
 	}
 }

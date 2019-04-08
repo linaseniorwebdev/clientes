@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once(APPPATH . 'core/User.php');
+require_once APPPATH . 'core/User.php';
 
 class Base extends CI_Controller {
 
@@ -15,7 +15,7 @@ class Base extends CI_Controller {
 		parent::__construct();
 
 		if ($this->session->user) {
-			$this->load->model('Users');
+			$this->load->model('User_model');
 			$user = $this->User_model->get_by_id($this->session->user);
 			$this->user = User::init($user);
 			$this->login = true;
@@ -31,43 +31,42 @@ class Base extends CI_Controller {
 
 	/**
 	 * Load header file, with title
+	 * @param array $params
+	 * @param null $admin
 	 */
-	public function load_header($title, $admin = null) {
-		if ($admin)
-			$this->load->view('admin/header', array('title' => $title));
-		else
-			$this->load->view('front/header', array('title' => $title));
+	public function load_header($params = array(), $admin = null) {
+		if ($admin) {
+			$this->load->view('admin/header', $params);
+		} else {
+			$this->load->view('front/header', $params);
+		}
 	}
 
 	/**
 	 * Load footer file
+	 * @param array $params
+	 * @param null $admin
 	 */
-	public function load_footer($admin = null, $name = null) {
+	public function load_footer($params = array(), $admin = null) {
 		if ($admin) {
-			if ($name)
-				$this->load->view('admin/footer', array('name' => $name));
-			else
-				$this->load->view('admin/footer');
-		} else
-			$this->load->view('front/footer');
+			$this->load->view('admin/footer', $params);
+		} else {
+			$this->load->view('front/footer', $params);
+		}
 	}
 
 	/**
 	 * Check if post data exist
 	 */
 	public function post_exist() {
-		if (isset($_POST) && count($_POST) > 0)
-			return true;
-		return false;
+		return isset($_POST) && count($_POST) > 0;
 	}
 
 	/**
 	 * Check if get data exist
 	 */
 	public function get_exist() {
-		if (isset($_GET) && count($_GET) > 0)
-			return true;
-		return false;
+		return isset($_GET) && count($_GET) > 0;
 	}
 
 	/**

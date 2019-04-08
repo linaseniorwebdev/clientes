@@ -1,4 +1,4 @@
-</div></div>
+</div>
 
 <script src="public/assets/js/vendor/jquery-2.2.4.min.js"></script>
 <script src="public/assets/js/popper.min.js"></script>
@@ -21,7 +21,7 @@ if (isset($datatable)) {
 <script src="public/assets/js/scripts.js"></script>
 <?php
 if (isset($name))
-	echo '<script src="public/custom/admin/' . $name . '.js"></script>';
+	echo '<script src="public/custom/front/' . $name . '.js"></script>';
 ?>
 </body>
 

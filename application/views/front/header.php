@@ -9,18 +9,7 @@
 	<link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="public/assets/css/font-awesome.min.css">
 	<link rel="stylesheet" href="public/assets/css/themify-icons.css">
-	<link rel="stylesheet" href="public/assets/css/metisMenu.css">
 	<link rel="stylesheet" href="public/assets/css/slicknav.min.css">
-	<?php
-	if (isset($datatable)) {
-	?>
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
-	<?php
-	}
-	?>
 	<link rel="stylesheet" href="public/assets/css/typography.css">
 	<link rel="stylesheet" href="public/assets/css/default-css.css">
 	<link rel="stylesheet" href="public/assets/css/styles.css">
@@ -34,4 +23,4 @@
 	<div class="loader"></div>
 </div>
 
-<div class="page-container">
+<div class="container">
