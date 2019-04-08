@@ -125,7 +125,7 @@ class Admin extends Base {
 
 			$this->load_header($hparams, true);
 			$this->load->view('admin/sidebar', array('com' => 'user', 'sub' => $com));
-			$this->load->view('admin/topbar', array('title' => $title));
+			$this->load->view('admin/topbar', array('title' => $hparams['title']));
 			$this->load->view('admin/user_' . $com, $data);
 			$this->load_footer($fparams, true);
 		} else {
@@ -136,34 +136,64 @@ class Admin extends Base {
 	/**
 	 * Customer Management Page
 	 * @param string $com
+	 * @param null $sub
 	 */
-	public function customer($com = 'search') {
+	public function customer($com = 'search', $sub = null) {
+		$this->load->model('Customer_model');
 		if ($this->admin) {
 			$title = '';
+			$code = 0;
+			$data = array();
 			$hparams = array();
 			$fparams = array();
 
 			$this->load->model('Customer_model');
 
 			if ($com === 'search') {
-				$title = 'Buscar cliente';
+				$hparams['title'] = 'Buscar cliente';
+				$hparams['sweetalert'] = 'on';
+				$hparams['datatable'] = 'on';
+				$fparams['sweetalert'] = 'on';
+				$fparams['datatable'] = 'on';
 			}
 
 			if ($com === 'create') {
-				$title = 'Crear cliente';
+				$hparams['title'] = 'Crear cliente';
+				$hparams['sweetalert'] = 'on';
+				$fparams['sweetalert'] = 'on';
+				$fparams['validate'] = 'on';
+				$fparams['googlemap'] = 'on';
+				$fparams['gmap'] = 'on';
+				$code = $this->Customer_model->get_last_code();
+				if ($code) {
+					$code = (int)$code['last_code'] + 1;
+				} else {
+					$code = 1;
+				}
+			}
+
+			if ($com === 'edit') {
+				$hparams['title'] = 'Editar cliente';
+				$hparams['sweetalert'] = 'on';
+				$fparams['sweetalert'] = 'on';
+				$fparams['validate'] = 'on';
+				$fparams['googlemap'] = 'on';
+				$fparams['gmap'] = 'on';
+				$data = $this->Customer_model->get_by_code($sub);
 			}
 
 			if ($com === 'map') {
-				$title = 'Clientes en el mapa';
+				$hparams['title'] = 'Clientes en el mapa';
+				$fparams['googlemap'] = 'on';
+				$fparams['gmap'] = 'on';
 			}
 
-			$hparams['title'] = $title;
 			$fparams['name'] = 'customer_' . $com;
 
 			$this->load_header($hparams, true);
 			$this->load->view('admin/sidebar', array('com' => 'customer', 'sub' => $com));
-			$this->load->view('admin/topbar', array('title' => $title));
-			$this->load->view('admin/customer_' . $com);
+			$this->load->view('admin/topbar', array('title' => $hparams['title']));
+			$this->load->view('admin/customer_' . $com, array('last_code' => $code, 'data' => $data));
 			$this->load_footer($fparams, true);
 		} else {
 			redirect('admin/signin');
@@ -201,7 +231,7 @@ class Admin extends Base {
 
 			$this->load_header($hparams, true);
 			$this->load->view('admin/sidebar', array('com' => 'zone', 'sub' => $com));
-			$this->load->view('admin/topbar', array('title' => $title));
+			$this->load->view('admin/topbar', array('title' => $hparams['title']));
 			$this->load->view('admin/zone_' . $com);
 			$this->load_footer($fparams, true);
 		} else {
@@ -232,7 +262,7 @@ class Admin extends Base {
 
 			$this->load_header($hparams, true);
 			$this->load->view('admin/sidebar', array('com' => 'task', 'sub' => $com));
-			$this->load->view('admin/topbar', array('title' => $title));
+			$this->load->view('admin/topbar', array('title' => $hparams['title']));
 			$this->load->view('admin/task_' . $com);
 			$this->load_footer($fparams, true);
 		} else {

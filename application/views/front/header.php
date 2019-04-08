@@ -10,6 +10,13 @@
 	<link rel="stylesheet" href="public/assets/css/font-awesome.min.css">
 	<link rel="stylesheet" href="public/assets/css/themify-icons.css">
 	<link rel="stylesheet" href="public/assets/css/slicknav.min.css">
+	<?php
+	if (isset($sweetalert)) {
+		?>
+		<link rel="stylesheet" href="public/vendors/sweetalert/sweetalert.css">
+		<?php
+	}
+	?>
 	<link rel="stylesheet" href="public/assets/css/typography.css">
 	<link rel="stylesheet" href="public/assets/css/default-css.css">
 	<link rel="stylesheet" href="public/assets/css/styles.css">

@@ -5,7 +5,7 @@ $(document).ready(function() {
 		responsive: true,
 		processing: true,
 		serverSide: true,
-		autoWidth: true,
+		autoWidth: false,
 		order: [],
 		ajax: {
 			url : "../../api/user/list",
@@ -69,8 +69,8 @@ $(document).ready(function() {
 		],
 		language: {
 			"decimal":        "",
-			"emptyTable":     "No hay datos en la tabla.",
-			"info":           "Mostrando _TOTAL_ entradas de _START_ a _END_.",
+			"emptyTable":     "No hay datos en la tabla",
+			"info":           "Mostrando _TOTAL_ entradas de _START_ a _END_",
 			"infoEmpty":      "Mostrando 0 a 0 de 0 entradas",
 			"infoFiltered":   "(Entradas totales se separó por filtración de _MAX_)",
 			"infoPostFix":    "",
@@ -87,7 +87,7 @@ $(document).ready(function() {
 				"previous":   "Siguiente"
 			},
 			"aria": {
-				"sortAscending":  ": Activar para ordenar las columnas en orden ascendente.",
+				"sortAscending":  ": Activar para ordenar las columnas en orden ascendente",
 				"sortDescending": ": Activar para ordenar en orden descendente por columna"
 			}
 		}

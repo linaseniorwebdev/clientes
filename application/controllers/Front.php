@@ -15,21 +15,20 @@ class Front extends Base {
 			redirect('front');
 		}
 
+		$this->load->model('Token_model');
+
 		if ($this->post_exist()) {
 			$this->load->model('User_model');
 
-			$this->load->model('Token_model');
 			$data = $this->Token_model->get_by_token($token);
 
 			$params = array();
-			$params['username'] = $this->input->post('username');
-			$params['password'] = md5($this->input->post('password'));
-			$params['firstname'] = $this->input->post('firstname');
-			$params['lastname'] = $this->input->post('lastname');
-			$params['last_ip'] = $this->input->post('ip');
-			$params['status'] = 2;
+			$params['User'] = $this->input->post('User');
+			$params['Pass'] = md5($this->input->post('Pass'));
+			$params['Last_IP'] = $this->input->post('IP');
+			$params['Status'] = 1;
 
-			$this->User_model->update_user($data['user_id'], $params);
+			$this->User_model->update_user($data['User'], $params);
 
 			$this->Token_model->delete_token($token);
 
@@ -37,16 +36,15 @@ class Front extends Base {
 
 			redirect('front');
 		} else {
-			$this->load->model('Token_model');
 			$data = $this->Token_model->get_by_token($token);
 			if ($data) {
 				$user = $data['User'];
 				$this->load->model('User_model');
 				$user = $this->User_model->get_by_id($user);
 
-				$this->load_header('Primera página');
+				$this->load_header(array('title' => 'Primera página', 'sweetalert' => 'on'));
 				$this->load->view('front/first', array('user' => $user, 'token' => $token));
-				$this->load_footer(array('name' => 'first'));
+				$this->load_footer(array('name' => 'first', 'sweetalert' => 'on'));
 			} else {
 				$this->load->view('404');
 			}

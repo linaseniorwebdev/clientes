@@ -17,6 +17,13 @@ if (isset($datatable)) {
 	<?php
 }
 ?>
+<?php
+if (isset($sweetalert)) {
+	?>
+	<script src="public/vendors/sweetalert/sweetalert.min.js"></script>
+	<?php
+}
+?>
 <script src="public/assets/js/plugins.js"></script>
 <script src="public/assets/js/scripts.js"></script>
 <?php

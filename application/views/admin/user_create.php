@@ -1,5 +1,5 @@
-<div class="main-content-inner">
-	<div class="card mt-4">
+<div class="main-content-inner" style="padding-top: 30px; padding-bottom: 30px;">
+	<div class="card">
 		<div class="card-body">
 			<?php
 			if (isset($message)) {

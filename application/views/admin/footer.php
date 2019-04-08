@@ -17,6 +17,37 @@ if (isset($datatable)) {
 	<?php
 }
 ?>
+<?php
+if (isset($sweetalert)) {
+	?>
+	<script src="public/vendors/sweetalert/sweetalert.min.js"></script>
+	<?php
+}
+?>
+<?php
+if (isset($validate)) {
+	?>
+	<script src="public/vendors/jquery-validate/jquery.validate.min.js"></script>
+	<script src="public/vendors/jquery-validate/localization/messages_es.min.js"></script>
+	<?php
+}
+?>
+<?php
+if (isset($googlemap)) {
+	?>
+	<script src="//maps.google.com/maps/api/js?key=AIzaSyDc-tuFvU94H3JKQO_Kq1M2fuF8ayPc7mU"></script>
+	<?php
+}
+?>
+<?php
+if (isset($gmap)) {
+	?>
+	<script src="public/vendors/gmaps/gmaps.js"></script>
+	<?php
+}
+?>
+
+
 <script src="public/assets/js/plugins.js"></script>
 <script src="public/assets/js/scripts.js"></script>
 <?php

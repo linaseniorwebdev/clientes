@@ -1,7 +1,6 @@
-<div class="main-content-inner">
+<div class="main-content-inner" style="padding-top: 30px; padding-bottom: 30px;">
 	<div class="card">
 		<div class="card-body">
-			<h4 class="header-title">Data Table Default</h4>
 			<div class="data-tables">
 				<table id="userList" class="text-center">
 					<thead class="bg-light text-capitalize">
