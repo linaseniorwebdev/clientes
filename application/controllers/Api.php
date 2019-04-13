@@ -150,4 +150,78 @@ class Api extends Base {
 			echo json_encode($result);
 		}
 	}
+
+	/**
+	 * Task processing module
+	 * @param string $com
+	 */
+	public function task($com = 'create') {
+		$this->load->model('Task_model');
+		if ($com === 'create') {
+			if ($this->login === true) {
+				$Creator = $this->user->getName();
+			} else {
+				$Creator = '[' . $this->admin . ']';
+			}
+			$params = array(
+				'Creator'       => $Creator,
+				'Subject'       => $this->input->post('Subject'),
+				'Details'       => $this->input->post('Details'),
+				'Priority'      => $this->input->post('Priority'),
+				'Created_At'    => date('Y-m-d'),
+				'Assigned'      => $this->input->post('Assigned'),
+				'Status'        => 1
+			);
+			$this->Task_model->add_task($params);
+		} elseif ($com === 'list') {
+			$this->load->model('Admin_model');
+			$this->load->model('User_model');
+
+			$data = array();
+
+			$taskData = $this->Task_model->getRows($_POST);
+
+			foreach ($taskData as $task) {
+				$Creator = $task->Creator;
+				if (strpos($Creator, '[') === 0) {
+					$Admin = $this->Admin_model->get_by_id(substr($Creator, 1, -1));
+					$Creator = $Admin['Admin'];
+				} else {
+					$User = $this->User_model->get_by_id($Creator);
+					$Creator = $User['First'] . ' ' . $User['Last'];
+				}
+				$Assigned = $task->Assigned;
+				$Users = explode(',', $Assigned);
+				$Assigned = array();
+				foreach ($Users as $User) {
+					$Data = $this->User_model->get_by_id($User);
+					$Assigned[] = $Data['First'] . ' ' . $Data['Last'];
+				}
+				$Assigned = implode(', ', $Assigned);
+				$data[] = array(
+					$task->ID,
+					$Creator,
+					$task->Subject,
+					$task->Priority,
+					$task->Created_At,
+					$task->Ended_At,
+					$task->Status,
+					$task->Progress,
+					$Assigned,
+					null,
+					$task->Details,
+					$task->Remark
+				);
+			}
+
+			$output = array(
+				'draw' => $_POST['draw'],
+				'recordsTotal' => $this->Task_model->countAll(),
+				'recordsFiltered' => $this->Task_model->countFiltered($_POST),
+				'data' => $data,
+			);
+
+			echo json_encode($output);
+		}
+	}
 }

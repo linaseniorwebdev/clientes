@@ -35,7 +35,7 @@ if (isset($validate)) {
 <?php
 if (isset($googlemap)) {
 	?>
-	<script src="//maps.google.com/maps/api/js?key="></script>
+	<script src="//maps.google.com/maps/api/js?key=AIzaSyDc-tuFvU94H3JKQO_Kq1M2fuF8ayPc7mU"></script>
 	<?php
 }
 ?>
@@ -46,7 +46,13 @@ if (isset($gmap)) {
 	<?php
 }
 ?>
-
+<?php
+if (isset($select2)) {
+	?>
+	<script src="public/vendors/select2/select2.min.js"></script>
+	<?php
+}
+?>
 
 <script src="public/assets/js/plugins.js"></script>
 <script src="public/assets/js/scripts.js"></script>

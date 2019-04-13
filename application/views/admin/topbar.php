@@ -165,7 +165,7 @@
 				<h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrator <i class="fa fa-angle-down"></i></h4>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="#">Ajustes</a>
-					<a class="dropdown-item" href="#">Cerrar sesión</a>
+					<a class="dropdown-item" href="<?php echo base_url('admin/logout') ?>">Cerrar sesión</a>
 				</div>
 			</div>
 		</div>

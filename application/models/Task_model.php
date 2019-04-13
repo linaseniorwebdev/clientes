@@ -1,6 +1,6 @@
 <?php
 
-class User_model extends CI_Model {
+class Task_model extends CI_Model {
 
 	private $table, $column_order, $column_search, $order;
 
@@ -10,9 +10,9 @@ class User_model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
 
-		$this->table = 'users';
-		$this->column_order = array(null, 'ID', 'User', 'Email', 'Last_IP', 'Status', 'Created_At');
-		$this->column_search = array('User', 'Email', 'Last_IP');
+		$this->table = 'tasks';
+		$this->column_order = array(null, 'ID', 'Creator', 'Subject', 'Details', 'Priority', 'Created_At', 'Ended_At', 'Status', 'Remark', 'Progress', 'Assigned');
+		$this->column_search = array('Subject', 'Details', 'Remark');
 		$this->order = array('ID' => 'asc');
 	}
 
@@ -82,51 +82,42 @@ class User_model extends CI_Model {
 	}
 
 	/**
-	 * Get all users
+	 * Get all tasks
 	 * @return mixed
 	 */
-	public function get_all_users() {
+	public function get_all_tasks() {
 		$this->db->order_by('ID', 'asc');
-		return $this->db->get('users')->result_array();
+		return $this->db->get('tasks')->result_array();
 	}
 
 	/**
-	 * Get all normal users
-	 * @return mixed
-	 */
-	public function get_normal_users() {
-		$this->db->order_by('ID', 'asc');
-		return $this->db->get_where('users', array('Status' => '1'))->result_array();
-	}
-
-	/**
-	 * Function to add new user
+	 * Function to add new task
 	 * @param $params
 	 * @return mixed
 	 */
-	public function add_user($params) {
-		$this->db->insert('users', $params);
+	public function add_task($params) {
+		$this->db->insert('tasks', $params);
 		return $this->db->insert_id();
 	}
 
 	/**
-	 * Function to update user
-	 * @param $user
+	 * Function to update task
+	 * @param $task
 	 * @param $params
 	 * @return mixed
 	 */
-	public function update_user($user, $params) {
-		$this->db->where('ID', $user);
-		return $this->db->update('users', $params);
+	public function update_task($task, $params) {
+		$this->db->where('ID', $task);
+		return $this->db->update('tasks', $params);
 	}
 
 	/**
-	 * Function to delete user
-	 * @param $user
+	 * Function to delete task
+	 * @param $task
 	 * @return mixed
 	 */
-	public function delete_user($user) {
-		return $this->db->delete('users', array('ID' => $user));
+	public function delete_task($task) {
+		return $this->db->delete('tasks', array('ID' => $task));
 	}
 
 	/**
@@ -134,33 +125,15 @@ class User_model extends CI_Model {
 	 * @return mixed
 	 */
 	public function get_table_fields() {
-		return $this->db->list_fields('users');
+		return $this->db->list_fields('tasks');
 	}
 
 	/**
-	 * Get user by email
-	 * @param $email
+	 * Get task by id
+	 * @param $task
 	 * @return mixed
 	 */
-	public function get_by_email($email) {
-		return $this->db->get_where('users', array('Email' => $email))->row_array();
-	}
-
-	/**
-	 * Get user by name
-	 * @param $name
-	 * @return mixed
-	 */
-	public function get_by_name($name) {
-		return $this->db->get_where('users', array('User' => $name))->row_array();
-	}
-
-	/**
-	 * Get user by id
-	 * @param $user
-	 * @return mixed
-	 */
-	public function get_by_id($user) {
-		return $this->db->get_where('users', array('ID' => $user))->row_array();
+	public function get_by_id($task) {
+		return $this->db->get_where('tasks', array('ID' => $task))->row_array();
 	}
 }

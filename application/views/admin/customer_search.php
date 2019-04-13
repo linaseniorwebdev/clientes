@@ -1,6 +1,7 @@
 <style>
 	table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before {
-		top: 35%;
+		top: 50%;
+		transform: translateY(-50%);
 		left: 6px;
 	}
 

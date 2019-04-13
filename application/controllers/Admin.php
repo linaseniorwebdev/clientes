@@ -248,22 +248,30 @@ class Admin extends Base {
 			$title = '';
 			$hparams = array();
 			$fparams = array();
+			$data = array();
 
 			if ($com === 'list') {
-				$title = 'Lista de tareas';
+				$hparams['title'] = 'Lista de tareas';
+				$hparams['datatable'] = 'on';
+				$fparams['datatable'] = 'on';
 			}
 
 			if ($com === 'create') {
-				$title = 'Crear tareas';
+				$hparams['sweetalert'] = 'on';
+				$fparams['sweetalert'] = 'on';
+				$hparams['select2'] = 'on';
+				$fparams['select2'] = 'on';
+				$hparams['title'] = 'Crear tareas';
+				$this->load->model('User_model');
+				$data['users'] = $this->User_model->get_normal_users();
 			}
 
-			$hparams['title'] = $title;
 			$fparams['name'] = 'task_' . $com;
 
 			$this->load_header($hparams, true);
 			$this->load->view('admin/sidebar', array('com' => 'task', 'sub' => $com));
 			$this->load->view('admin/topbar', array('title' => $hparams['title']));
-			$this->load->view('admin/task_' . $com);
+			$this->load->view('admin/task_' . $com, $data);
 			$this->load_footer($fparams, true);
 		} else {
 			redirect('admin/signin');

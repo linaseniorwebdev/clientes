@@ -28,6 +28,13 @@
 		<?php
 	}
 	?>
+	<?php
+	if (isset($select2)) {
+		?>
+		<link rel="stylesheet" href="public/vendors/select2/select2.min.css">
+		<?php
+	}
+	?>
 	<link rel="stylesheet" href="public/assets/css/typography.css">
 	<link rel="stylesheet" href="public/assets/css/default-css.css">
 	<link rel="stylesheet" href="public/assets/css/styles.css">
