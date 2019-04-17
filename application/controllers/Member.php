@@ -140,6 +140,12 @@ class Member extends Base {
 
 			if ($com === 'submit') {
 				$hparams['title'] = 'Crear una nueva solicitud';
+				$hparams['datatable'] = 'on';
+				$fparams['datatable'] = 'on';
+				$hparams['summernote'] = 'on';
+				$fparams['summernote'] = 'on';
+				$hparams['sweetalert'] = 'on';
+				$fparams['sweetalert'] = 'on';
 			}
 
 			if ($com === 'accepted') {

@@ -39,6 +39,13 @@ if (isset($select2)) {
 	<?php
 }
 ?>
+<?php
+if (isset($summernote)) {
+	?>
+	<script src="public/vendors/summernote/summernote-bs4.min.js"></script>
+	<?php
+}
+?>
 
 <script src="public/assets/js/plugins.js"></script>
 <script src="public/assets/js/scripts.js"></script>

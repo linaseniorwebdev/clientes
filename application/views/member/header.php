@@ -35,6 +35,13 @@
 		<?php
 	}
 	?>
+	<?php
+	if (isset($summernote)) {
+		?>
+		<link rel="stylesheet" href="public/vendors/summernote/summernote-bs4.css">
+		<?php
+	}
+	?>
 	<link rel="stylesheet" href="public/assets/css/typography.css">
 	<link rel="stylesheet" href="public/assets/css/default-css.css">
 	<link rel="stylesheet" href="public/assets/css/styles.css">
