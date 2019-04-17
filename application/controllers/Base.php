@@ -38,7 +38,7 @@ class Base extends CI_Controller {
 		if ($admin) {
 			$this->load->view('admin/header', $params);
 		} else {
-			$this->load->view('front/header', $params);
+			$this->load->view('member/header', $params);
 		}
 	}
 
@@ -51,7 +51,7 @@ class Base extends CI_Controller {
 		if ($admin) {
 			$this->load->view('admin/footer', $params);
 		} else {
-			$this->load->view('front/footer', $params);
+			$this->load->view('member/footer', $params);
 		}
 	}
 

@@ -92,11 +92,17 @@ class User_model extends CI_Model {
 
 	/**
 	 * Get all normal users
+	 * @param null $user
 	 * @return mixed
 	 */
-	public function get_normal_users() {
+	public function get_normal_users($user = null) {
 		$this->db->order_by('ID', 'asc');
-		return $this->db->get_where('users', array('Status' => '1'))->result_array();
+		if ($user) {
+			$result = $this->db->get_where('users', array('Status' => '1', 'ID  != ' => $user))->result_array();
+		} else {
+			$result = $this->db->get_where('users', array('Status' => '1'))->result_array();
+		}
+		return $result;
 	}
 
 	/**

@@ -1,11 +1,11 @@
-</div></div>
-
 <script src="public/assets/js/vendor/jquery-2.2.4.min.js"></script>
 <script src="public/assets/js/popper.min.js"></script>
 <script src="public/assets/js/bootstrap.min.js"></script>
+<script src="public/assets/js/owl.carousel.min.js"></script>
 <script src="public/assets/js/metisMenu.min.js"></script>
 <script src="public/assets/js/jquery.slimscroll.min.js"></script>
 <script src="public/assets/js/jquery.slicknav.min.js"></script>
+
 <?php
 if (isset($datatable)) {
 	?>
@@ -33,20 +33,6 @@ if (isset($validate)) {
 }
 ?>
 <?php
-if (isset($googlemap)) {
-	?>
-	<script src="//maps.google.com/maps/api/js?key=AIzaSyDc-tuFvU94H3JKQO_Kq1M2fuF8ayPc7mU"></script>
-	<?php
-}
-?>
-<?php
-if (isset($gmap)) {
-	?>
-	<script src="public/vendors/gmaps/gmaps.js"></script>
-	<?php
-}
-?>
-<?php
 if (isset($select2)) {
 	?>
 	<script src="public/vendors/select2/select2.min.js"></script>
@@ -58,8 +44,9 @@ if (isset($select2)) {
 <script src="public/assets/js/scripts.js"></script>
 <?php
 if (isset($name))
-	echo '<script src="public/custom/admin/' . $name . '.js"></script>';
+	echo '<script src="public/custom/member/' . $name . '.js"></script>';
 ?>
+
 </body>
 
 </html>

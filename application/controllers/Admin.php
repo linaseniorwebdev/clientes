@@ -45,7 +45,7 @@ class Admin extends Base {
 	 */
 	public function logout() {
 		$this->session->unset_userdata('admin');
-		redirect('admin');
+		redirect('front');
 	}
 
 	/**

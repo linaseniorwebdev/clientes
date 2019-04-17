@@ -30,7 +30,7 @@
 <div class="login-area">
 	<div class="container">
 		<div class="login-box ptb--100">
-			<form action="<?php echo base_url('admin/signin'); ?>" method="post">
+			<form action="<?php echo base_url('member/login'); ?>" method="post">
 				<div class="login-form-head">
 					<h4>iniciar sesión</h4>
 				</div>
