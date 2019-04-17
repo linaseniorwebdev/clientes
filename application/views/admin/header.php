@@ -1,6 +1,5 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
-
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -41,9 +40,7 @@
 	<link rel="stylesheet" href="public/assets/css/responsive.css">
 	<script src="public/assets/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-
 <body>
-
 <div id="preloader">
 	<div class="loader"></div>
 </div>

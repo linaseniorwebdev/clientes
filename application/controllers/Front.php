@@ -7,7 +7,7 @@ require_once(APPPATH . 'controllers/Base.php');
 class Front extends Base {
 
 	public function index() {
-		echo 'Index Page';
+		$this->load->view('front/index');
 	}
 
 	public function first($token = null) {

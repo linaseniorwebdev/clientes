@@ -70,7 +70,6 @@ class Admin extends Base {
 	 */
 	public function user($com = 'list') {
 		if ($this->admin) {
-			$title = '';
 			$data = array();
 			$hparams = array();
 			$fparams = array();
