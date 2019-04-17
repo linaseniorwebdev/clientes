@@ -19,10 +19,19 @@ class Task_model extends CI_Model {
 	/**
 	 * Get data
 	 * @param $postData
+	 * @param null $type
+	 * @param null $value
 	 * @return mixed
 	 */
-	public function getRows($postData) {
+	public function getRows($postData, $type = null, $value = null) {
 		$this->_get_datatables_query($postData);
+		if ($type) {
+			if ($type === 'mine') {
+				$this->db->where('Creator', $value);
+			} else {
+				$this->db->like('Assigned', '[' . $value . ']');
+			}
+		}
 		if ($postData['length'] != -1) {
 			$this->db->limit($postData['length'], $postData['start']);
 		}
@@ -32,20 +41,38 @@ class Task_model extends CI_Model {
 
 	/**
 	 * Count all records
+	 * @param null $type
+	 * @param null $value
 	 * @return mixed
 	 */
-	public function countAll() {
+	public function countAll($type = null, $value = null) {
 		$this->db->from($this->table);
+		if ($type) {
+			if ($type === 'mine') {
+				$this->db->where('Creator', $value);
+			} else {
+				$this->db->like('Assigned', '[' . $value . ']');
+			}
+		}
 		return $this->db->count_all_results();
 	}
 
 	/**
 	 * Count filtered records
 	 * @param $postData
+	 * @param null $type
+	 * @param null $value
 	 * @return mixed
 	 */
-	public function countFiltered($postData) {
+	public function countFiltered($postData, $type = null, $value = null) {
 		$this->_get_datatables_query($postData);
+		if ($type) {
+			if ($type === 'mine') {
+				$this->db->where('Creator', $value);
+			} else {
+				$this->db->like('Assigned', '[' . $value . ']');
+			}
+		}
 		$query = $this->db->get();
 		return $query->num_rows();
 	}

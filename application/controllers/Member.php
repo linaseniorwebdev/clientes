@@ -96,14 +96,21 @@ class Member extends Base {
 				$fparams['select2'] = 'on';
 				$hparams['title'] = 'Crear una nueva tarea';
 				$data['users'] = $this->User_model->get_normal_users($this->user->getId());
+				$data['admin'] = $this->user->getId();
 			}
 
 			if ($com === 'mine') {
 				$hparams['title'] = 'Tareas, creadas por mi';
+				$hparams['datatable'] = 'on';
+				$fparams['datatable'] = 'on';
 			}
 
 			if ($com === 'todo') {
 				$hparams['title'] = 'Tareas, deben ser hechas por mi';
+				$hparams['datatable'] = 'on';
+				$fparams['datatable'] = 'on';
+				$hparams['sweetalert'] = 'on';
+				$fparams['sweetalert'] = 'on';
 			}
 
 			$fparams['name'] = 'task_' . $com;

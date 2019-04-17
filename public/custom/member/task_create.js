@@ -23,13 +23,14 @@ $("button").click(function() {
 	$.post(
 		'../../api/task/create',
 		{
+			Creator: $("input[name='admin']").val(),
 			Subject: Subject,
 			Details: Details,
 			Priority: $("#Priority").val(),
 			Assigned: Assigned
 		},
 		function () {
-			location.href = "list";
+			location.href = "mine";
 		}
 	);
 });

@@ -40,6 +40,7 @@
 					</div>
 					<div class="form-group mt-4 mb-0 text-center">
 						<button type="button" class="btn btn-rounded btn-primary">Enviar</button>
+						<input type="hidden" name="admin" value="<?php echo $admin ?>">
 					</div>
 				</form>
 			</div>

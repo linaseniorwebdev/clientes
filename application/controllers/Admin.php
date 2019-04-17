@@ -263,6 +263,7 @@ class Admin extends Base {
 				$hparams['title'] = 'Crear tareas';
 				$this->load->model('User_model');
 				$data['users'] = $this->User_model->get_normal_users();
+				$data['admin'] = $this->admin;
 			}
 
 			$fparams['name'] = 'task_' . $com;
